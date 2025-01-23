@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import fuzzysort from "fuzzysort"; // Import fuzzysort
 import data from "./data"; // Import your JSON data
 import "./index.css"; // Import the CSS file
-import { FaSearch } from "react-icons/fa"; // Import the search icon
+import { FaSearch, FaMoon, FaSun } from "react-icons/fa"; // Import the search icon and theme icons
 
 const SearchBar = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -12,6 +12,7 @@ const SearchBar = () => {
     // Initialize state directly from localStorage
     return JSON.parse(localStorage.getItem("usedSearches")) || [];
   });
+  const [theme, setTheme] = useState("dark"); // Track the current theme
   const inputRef = useRef(null); // Ref for the input element
   const resultsRef = useRef(null); // Ref for the results container
 
@@ -25,6 +26,11 @@ const SearchBar = () => {
   useEffect(() => {
     localStorage.setItem("usedSearches", JSON.stringify(usedSearches));
   }, [usedSearches]);
+
+  // Handle theme change
+  useEffect(() => {
+    document.body.className = theme; // Apply the theme class to the body
+  }, [theme]);
 
   // Handle search input changes
   const handleSearch = (event) => {
@@ -118,6 +124,11 @@ const SearchBar = () => {
     };
   }, []);
 
+  // Toggle between dark and light themes
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === "dark" ? "light" : "dark"));
+  };
+
   return (
     <div className="search-container">
       <div className="search-box">
@@ -133,6 +144,9 @@ const SearchBar = () => {
           onKeyDown={handleKeyDown} // Handle keydown events
           ref={inputRef} // Attach the ref to the input element
         />
+        <button className="theme-toggle" onClick={toggleTheme}>
+          {theme === "dark" ? <FaSun /> : <FaMoon />}
+        </button>
       </div>
       {searchQuery ? (
         <div className="results-container" ref={resultsRef}>
