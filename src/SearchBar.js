@@ -8,7 +8,10 @@ const SearchBar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [focusedIndex, setFocusedIndex] = useState(-1); // Track the focused result index
-  const [usedSearches, setUsedSearches] = useState([]); // Track used searches
+  const [usedSearches, setUsedSearches] = useState(() => {
+    // Initialize state directly from localStorage
+    return JSON.parse(localStorage.getItem("usedSearches")) || [];
+  });
   const inputRef = useRef(null); // Ref for the input element
   const resultsRef = useRef(null); // Ref for the results container
 
@@ -17,13 +20,6 @@ const SearchBar = () => {
     key,
     value,
   }));
-
-  // Load used searches from localStorage on component mount
-  useEffect(() => {
-    const storedUsedSearches =
-      JSON.parse(localStorage.getItem("usedSearches")) || [];
-    setUsedSearches(storedUsedSearches);
-  }, []);
 
   // Save used searches to localStorage whenever it changes
   useEffect(() => {
