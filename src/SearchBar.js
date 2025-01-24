@@ -4,7 +4,11 @@ import data from "./data"; // Import your JSON data
 import "./index.css"; // Import the CSS file
 import { FaSearch, FaMoon, FaSun } from "react-icons/fa"; // Import the search icon and theme icons
 
+
 const SearchBar = () => {
+	useEffect(() => {
+		document.title = 'cerch';
+	}, []);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [focusedIndex, setFocusedIndex] = useState(-1); // Track the focused result index
@@ -207,7 +211,6 @@ const SearchBar = () => {
         )
       )}
 	  <h2> cerch </h2>
-	<p class = "legend-key">k8s == <span class="legend-value">kubernetes</span></p>
     </div>
   );
 };
