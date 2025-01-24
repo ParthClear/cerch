@@ -15,14 +15,19 @@ body {
 
 /* Dark Theme (Default) */
 body.dark {
-  background-color: #130f40;
+  background-color: #1d1d1d;
   color: #fff;
 }
 
 /* Light Theme */
 body.light {
-  background-color: #f4f4f9;
+  background-color: #ffffff;
   color: #333;
+}
+
+h1 {
+  font-weight: bolder;
+  font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .search-container {
@@ -49,15 +54,15 @@ body.light {
   outline: none;
   border-radius: 25px;
   transition: all 0.5s ease-in-out;
-  background-color: #22a6b3;
+  background-color: #176e7600;
   padding-right: 40px;
   color: #fff;
-  animation: slideIn 0.5s ease-out; /* Add animation to the search bar */
+  animation: slide 0.1s linear; /* Add animation to the search bar */
 }
 
 body.light .input-search {
-  background-color: #007bff;
-  color: #fff;
+  background-color: #e0efff;
+  color: #1c1c1c;
 }
 
 @keyframes slideIn {
@@ -143,15 +148,23 @@ body.light .input-search:focus {
   overflow-y: auto; /* Make it scrollable */
   position: absolute;
   top: 70px; /* Position it below the search bar */
-  background-color: #130f40; /* Match the background color */
   border-radius: 5px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  /*box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);*/
   z-index: 10; /* Ensure it appears above other elements */
   animation: slideUp 0.3s ease-out; /* Add animation to the results container */
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.results-container::-webkit-scrollbar { /* chrome */
+  display: none;
 }
 
+body.light ::placeholder {
+  color: rgb(100, 100, 100);
+  opacity: 1; /* Firefox */
+}
 body.light .results-container {
-  background-color: #fff;
+  background-color: #f4f4f9;
   color: #333;
 }
 
@@ -173,7 +186,7 @@ body.light .results-container {
   padding: 10px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   color: #fff;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.03);
   margin-bottom: 5px;
   border-radius: 5px;
   cursor: pointer; /* Show pointer cursor on hover */
@@ -182,23 +195,23 @@ body.light .results-container {
 
 body.light .result-item {
   color: #333;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.03);
 }
 
 .result-item:hover {
-  background-color: rgba(255, 255, 255, 0.2); /* Highlight on hover */
+  background-color: rgba(255, 255, 255, 0.1); /* Highlight on hover */
 }
 
 body.light .result-item:hover {
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .result-item.focused {
-  background-color: #22a6b3; /* Highlight focused result */
+  background-color: #a6e1e7; /* Highlight focused result */
 }
 
 body.light .result-item.focused {
-  background-color: #007bff;
+  background-color: #b2d3f7;
 }
 
 .result-item a {

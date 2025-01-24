@@ -12,7 +12,9 @@ const SearchBar = () => {
     // Initialize state directly from localStorage
     return JSON.parse(localStorage.getItem("usedSearches")) || [];
   });
-  const [theme, setTheme] = useState("dark"); // Track the current theme
+  const [theme, setTheme] = useState(() => {
+	  return JSON.parse(localStorage.getItem("theme")) || "dark";
+  }); // Track the current theme
   const inputRef = useRef(null); // Ref for the input element
   const resultsRef = useRef(null); // Ref for the results container
 
@@ -26,6 +28,10 @@ const SearchBar = () => {
   useEffect(() => {
     localStorage.setItem("usedSearches", JSON.stringify(usedSearches));
   }, [usedSearches]);
+
+  useEffect(() => {
+    localStorage.setItem("theme",JSON.stringify(theme));
+  }, [theme]);
 
   // Handle theme change
   useEffect(() => {
@@ -44,7 +50,7 @@ const SearchBar = () => {
       // Perform fuzzy search using fuzzysort
       const results = fuzzysort.go(query, dataArray, {
         key: "key", // Search only in the "key" field
-        threshold: -10000, // Adjust the threshold for fuzzy matching
+        //threshold: -10000, // Adjust the threshold for fuzzy matching
       });
 
       // Extract the original items from the results
@@ -95,6 +101,15 @@ const SearchBar = () => {
         handleLinkClick(itemToOpen);
       }
     }
+	if(event.ctrlKey && event.key === "n" && results.length > 0){
+      event.preventDefault(); // Prevent default ArrowDown behavior
+      const nextIndex = (focusedIndex + 1) % results.length; // Move to the next result
+      setFocusedIndex(nextIndex);
+	} else if(event.ctrlKey && event.key === "p" && results.length > 0){
+      event.preventDefault(); // Prevent default ArrowUp behavior
+      const prevIndex = (focusedIndex - 1 + results.length) % results.length; // Move to the previous result
+      setFocusedIndex(prevIndex);
+	}
   };
 
   // Autofocus the input on page load
@@ -113,6 +128,9 @@ const SearchBar = () => {
           inputRef.current.focus();
         }
       }
+		if(( event.ctrlKey && event.key == "n" )){
+
+		}
     };
 
     // Add event listener for keydown
@@ -171,7 +189,7 @@ const SearchBar = () => {
       ) : (
         usedSearches.length > 0 && (
           <div className="results-container">
-            <div className="used-searches-header">Most Used Searches</div>
+            <div className="used-searches-header">Frequent Searches</div>
             {usedSearches.map((item, index) => (
               <div
                 key={index}
@@ -188,6 +206,8 @@ const SearchBar = () => {
           </div>
         )
       )}
+	  <h2> cerch </h2>
+	<p class = "legend-key">k8s == <span class="legend-value">kubernetes</span></p>
     </div>
   );
 };
